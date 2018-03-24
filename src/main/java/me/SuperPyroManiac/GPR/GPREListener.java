@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.UUID;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
+import me.ryanhamshire.GriefPrevention.DataStore;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.milkbowl.vault.economy.Economy;
@@ -46,7 +47,7 @@ public class GPREListener
         pm.registerEvents(this, this.plugin);
     }
 
-    private boolean makePayment(Player sender, OfflinePlayer receiver, Double price)
+    private boolean makePayment(Player sender, OfflinePlayer receiver, Double price, Claim claim)
     {
         if (!GPRealEstate.econ.has(sender, price.doubleValue()))
         {
@@ -69,6 +70,20 @@ public class GPREListener
                 return false;
             }
         }
+
+        //RoboMWM - transfer accrued claim blocks
+        DataStore dataStore = GriefPrevention.instance.dataStore;
+        PlayerData senderData = dataStore.getPlayerData(sender.getUniqueId());
+        PlayerData receiverData = dataStore.getPlayerData(receiver.getUniqueId());
+
+        //Withdraw bonus, then accrued, from sender
+        senderData.setBonusClaimBlocks(senderData.getBonusClaimBlocks() - claim.getArea());
+        if (senderData.getBonusClaimBlocks() < 0)
+            senderData.setAccruedClaimBlocks(senderData.getAccruedClaimBlocks() - senderData.getBonusClaimBlocks());
+
+        receiverData.setBonusClaimBlocks(receiverData.getBonusClaimBlocks() + claim.getArea());
+        //RoboMWM end - transfer accrued claim blocks
+
         return true;
     }
 
@@ -313,7 +328,7 @@ public class GPREListener
                             {
                                 if ((claim.getArea() <= gp.dataStore.getPlayerData(player.getUniqueId()).getAccruedClaimBlocks()) || (player.hasPermission("gprealestate.ignore.limit")))
                                 {
-                                    if (makePayment(player, Bukkit.getOfflinePlayer(sign.getLine(2)), price))
+                                    if (makePayment(player, Bukkit.getOfflinePlayer(sign.getLine(2)), price, claim))
                                     {
                                         try
                                         {
@@ -361,7 +376,7 @@ public class GPREListener
                         {
                             if (GPRealEstate.perms.has(player, "gprealestate.subclaim.buy"))
                             {
-                                if (makePayment(player, Bukkit.getOfflinePlayer(sign.getLine(2)), price))
+                                if (makePayment(player, Bukkit.getOfflinePlayer(sign.getLine(2)), price, claim))
                                 {
                                     claim.clearPermissions();
                                     if (claim.parent.isAdminClaim())
