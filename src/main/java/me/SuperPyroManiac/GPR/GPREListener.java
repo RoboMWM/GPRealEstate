@@ -46,7 +46,7 @@ public class GPREListener
         pm.registerEvents(this, this.plugin);
     }
 
-    private boolean makePayment(Player sender, OfflinePlayer reciever, Double price)
+    private boolean makePayment(Player sender, OfflinePlayer receiver, Double price)
     {
         if (!GPRealEstate.econ.has(sender, price.doubleValue()))
         {
@@ -59,9 +59,9 @@ public class GPREListener
             sender.sendMessage(this.plugin.dataStore.chatPrefix + ChatColor.RED + "Could not withdraw the money!");
             return false;
         }
-        if (!reciever.getName().equalsIgnoreCase("server"))
+        if (!receiver.getName().equalsIgnoreCase("server"))
         {
-            ecoresp = GPRealEstate.econ.depositPlayer(reciever, price.doubleValue());
+            ecoresp = GPRealEstate.econ.depositPlayer(receiver, price.doubleValue());
             if (!ecoresp.transactionSuccess())
             {
                 sender.sendMessage(this.plugin.dataStore.chatPrefix + ChatColor.RED + "Could not transfer money, refunding Player!");
