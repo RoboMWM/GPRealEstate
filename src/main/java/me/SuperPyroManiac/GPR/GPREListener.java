@@ -72,6 +72,8 @@ public class GPREListener
         }
 
         //RoboMWM - transfer accrued claim blocks
+        if (claim.parent == null)
+            return true; //Don't transfer claim blocks for subclaims.
         DataStore dataStore = GriefPrevention.instance.dataStore;
         PlayerData senderData = dataStore.getPlayerData(sender.getUniqueId());
         PlayerData receiverData = dataStore.getPlayerData(receiver.getUniqueId());
