@@ -124,6 +124,8 @@ public class GPRealEstate
         this.dataStore.cfgEnableLeasing = config.getBoolean("GPRealEstate.Rules.EnableLeasing", false);
         this.dataStore.cfgAllowSellingParentAC = config.getBoolean("GPRealEstate.Rules.AllowSellingParentAC", false);
         this.dataStore.cfgIgnoreClaimSize = config.getBoolean("GPRealEstate.Rules.IgnoreSizeLimit", false);
+        this.dataStore.cfgTransferClaimBlocks = config.getBoolean("GPRealEstate.Rules.TransferClaimBlocks", true);
+
         if (!reload) {
             this.log.info("Signs will be using the keywords \"" + this.dataStore.cfgSignShort + "\" or \"" + this.dataStore.cfgSignLong + "\"");
         }
@@ -137,6 +139,7 @@ public class GPRealEstate
         outConfig.set("GPRealEstate.Rules.EnableLeasing", Boolean.valueOf(this.dataStore.cfgEnableLeasing));
         outConfig.set("GPRealEstate.Rules.IgnoreSizeLimit", Boolean.valueOf(this.dataStore.cfgIgnoreClaimSize));
         outConfig.set("GPRealEstate.Rules.AllowSellingParentAC", Boolean.valueOf(this.dataStore.cfgAllowSellingParentAC));
+        outConfig.set("GPRealEstate.Rules.TransferClaimBlocks", this.dataStore.cfgTransferClaimBlocks);
         try
         {
             outConfig.save(this.dataStore.configFilePath);
