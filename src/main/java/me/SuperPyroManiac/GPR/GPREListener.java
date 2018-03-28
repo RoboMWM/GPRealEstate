@@ -47,26 +47,26 @@ public class GPREListener
         pm.registerEvents(this, this.plugin);
     }
 
-    private boolean makePayment(Player sender, OfflinePlayer receiver, Double price, Claim claim)
+    private boolean makePayment(Player buyer, OfflinePlayer seller, Double price, Claim claim)
     {
-        if (!GPRealEstate.econ.has(sender, price.doubleValue()))
+        if (!GPRealEstate.econ.has(buyer, price.doubleValue()))
         {
-            sender.sendMessage(this.plugin.dataStore.chatPrefix + ChatColor.RED + "You do not have enough money!");
+            buyer.sendMessage(this.plugin.dataStore.chatPrefix + ChatColor.RED + "You do not have enough money!");
             return false;
         }
-        EconomyResponse ecoresp = GPRealEstate.econ.withdrawPlayer(sender, price.doubleValue());
+        EconomyResponse ecoresp = GPRealEstate.econ.withdrawPlayer(buyer, price.doubleValue());
         if (!ecoresp.transactionSuccess())
         {
-            sender.sendMessage(this.plugin.dataStore.chatPrefix + ChatColor.RED + "Could not withdraw the money!");
+            buyer.sendMessage(this.plugin.dataStore.chatPrefix + ChatColor.RED + "Could not withdraw the money!");
             return false;
         }
-        if (!receiver.getName().equalsIgnoreCase("server"))
+        if (!seller.getName().equalsIgnoreCase("server"))
         {
-            ecoresp = GPRealEstate.econ.depositPlayer(receiver, price.doubleValue());
+            ecoresp = GPRealEstate.econ.depositPlayer(seller, price.doubleValue());
             if (!ecoresp.transactionSuccess())
             {
-                sender.sendMessage(this.plugin.dataStore.chatPrefix + ChatColor.RED + "Could not transfer money, refunding Player!");
-                GPRealEstate.econ.depositPlayer(sender, price.doubleValue());
+                buyer.sendMessage(this.plugin.dataStore.chatPrefix + ChatColor.RED + "Could not transfer money, refunding Player!");
+                GPRealEstate.econ.depositPlayer(buyer, price.doubleValue());
                 return false;
             }
         }
@@ -75,15 +75,18 @@ public class GPREListener
         if (!plugin.dataStore.cfgTransferClaimBlocks || claim.parent != null)
             return true; //Don't transfer claim blocks for subclaims.
         DataStore dataStore = GriefPrevention.instance.dataStore;
-        PlayerData senderData = dataStore.getPlayerData(sender.getUniqueId());
-        PlayerData receiverData = dataStore.getPlayerData(receiver.getUniqueId());
+        PlayerData buyerData = dataStore.getPlayerData(buyer.getUniqueId());
+        PlayerData sellerData = dataStore.getPlayerData(seller.getUniqueId());
 
         //Withdraw bonus, then accrued, from sender
-        senderData.setBonusClaimBlocks(senderData.getBonusClaimBlocks() - claim.getArea());
-        if (senderData.getBonusClaimBlocks() < 0)
-            senderData.setAccruedClaimBlocks(senderData.getAccruedClaimBlocks() - senderData.getBonusClaimBlocks());
+        sellerData.setBonusClaimBlocks(sellerData.getBonusClaimBlocks() - claim.getArea());
+        if (sellerData.getBonusClaimBlocks() < 0)
+        {
+            sellerData.setAccruedClaimBlocks(sellerData.getAccruedClaimBlocks() + sellerData.getBonusClaimBlocks());
+            sellerData.setBonusClaimBlocks(0);
+        }
 
-        receiverData.setBonusClaimBlocks(receiverData.getBonusClaimBlocks() + claim.getArea());
+        buyerData.setBonusClaimBlocks(buyerData.getBonusClaimBlocks() + claim.getArea());
         //RoboMWM end - transfer accrued claim blocks
 
         return true;
