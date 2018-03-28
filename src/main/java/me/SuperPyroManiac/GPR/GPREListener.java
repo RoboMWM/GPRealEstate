@@ -78,7 +78,7 @@ public class GPREListener
         PlayerData buyerData = dataStore.getPlayerData(buyer.getUniqueId());
         PlayerData sellerData = dataStore.getPlayerData(seller.getUniqueId());
 
-        //Withdraw bonus, then accrued, from sender
+        //Withdraw bonus, then accrued, from seller
         sellerData.setBonusClaimBlocks(sellerData.getBonusClaimBlocks() - claim.getArea());
         if (sellerData.getBonusClaimBlocks() < 0)
         {
