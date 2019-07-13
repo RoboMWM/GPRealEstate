@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
+
+import me.SuperPyroManiac.GPR.events.GPRSaleEvent;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.DataStore;
@@ -70,6 +72,9 @@ public class GPREListener
                 return false;
             }
         }
+
+        //fire sale event
+        plugin.getServer().getPluginManager().callEvent(new GPRSaleEvent(claim));
 
         //RoboMWM - transfer accrued claim blocks
         if (!plugin.dataStore.cfgTransferClaimBlocks || claim.parent != null)
