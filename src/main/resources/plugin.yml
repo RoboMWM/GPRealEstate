@@ -1,7 +1,7 @@
 name: GPRealEstate
 main: me.SuperPyroManiac.GPR.GPRealEstate
 dev-url: http://www.spigotmc.org/resources/griefprevention-addon-realestate.1974/
-version: 1.5.4
+version: '${project.version}'
 authors: [SuperPyroManiac, MrCaira]
 depend: [GriefPrevention, Vault]
 
