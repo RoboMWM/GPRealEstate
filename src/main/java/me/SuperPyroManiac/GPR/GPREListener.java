@@ -21,6 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -260,7 +261,7 @@ public class GPREListener
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK))
         {
             Material type = event.getClickedBlock().getType();
-            if ((type == Material.SIGN_POST) || (type == Material.WALL_SIGN))
+            if (Tag.SIGNS.isTagged(type))
             {
                 Sign sign = (Sign)event.getClickedBlock().getState();
                 if ((sign.getLine(0).equalsIgnoreCase(this.plugin.dataStore.cfgSignShort)) || (sign.getLine(0).equalsIgnoreCase(this.plugin.dataStore.cfgSignLong)))

@@ -4,6 +4,7 @@ dev-url: http://www.spigotmc.org/resources/griefprevention-addon-realestate.1974
 version: '${project.version}'
 authors: [SuperPyroManiac, MrCaira]
 depend: [GriefPrevention, Vault]
+api-version: '1.15'
 
 commands:
   gpre:
