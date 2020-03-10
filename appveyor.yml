@@ -31,5 +31,5 @@ cache:
   - C:\maven\
   - C:\Users\appveyor\.m2
 artifacts:
-  - path: target/GPRealEstate.jar
+  - path: target/GPR.jar
     name: GPRealEstate
