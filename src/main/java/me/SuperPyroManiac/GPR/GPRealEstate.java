@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
+
+import me.SuperPyroManiac.GPR.feature.MailSellerOnSale;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
@@ -62,6 +64,7 @@ public class GPRealEstate
             }
         }
         loadConfig(false);
+        new MailSellerOnSale(this);
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)

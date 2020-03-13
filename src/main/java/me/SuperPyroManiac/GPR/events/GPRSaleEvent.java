@@ -8,6 +8,8 @@ import org.bukkit.event.HandlerList;
  * Created on 7/12/2019.
  *
  * @author RoboMWM
+ *
+ * Fired right when a sale is about to be made (payment prerequisites have been met)
  */
 public class GPRSaleEvent extends Event
 {
