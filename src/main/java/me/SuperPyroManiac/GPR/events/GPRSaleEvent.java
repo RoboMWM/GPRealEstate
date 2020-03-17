@@ -1,6 +1,8 @@
 package me.SuperPyroManiac.GPR.events;
 
 import me.ryanhamshire.GriefPrevention.Claim;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -23,9 +25,11 @@ public class GPRSaleEvent extends Event
         return handlers;
     }
 
+    private double price;
     private Claim claim;
+    private OfflinePlayer buyer; //buyer is always online, but whatever
 
-    public GPRSaleEvent(Claim claim)
+    public GPRSaleEvent(Claim claim, OfflinePlayer buyer, double price)
     {
         this.claim = claim;
     }
@@ -33,5 +37,15 @@ public class GPRSaleEvent extends Event
     public Claim getClaim()
     {
         return claim;
+    }
+
+    public OfflinePlayer getBuyer()
+    {
+        return buyer;
+    }
+
+    public double getPrice()
+    {
+        return price;
     }
 }

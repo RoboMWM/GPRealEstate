@@ -2,6 +2,7 @@ package me.SuperPyroManiac.GPR.feature;
 
 import me.SuperPyroManiac.GPR.events.GPRSaleEvent;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -31,8 +32,15 @@ public class MailSellerOnSale implements Listener
         String name = event.getClaim().getOwnerName();
 
         String command = ChatColor.translateAlternateColorCodes('&', "mail send " + name +
-                " &f[&6GPAuctions&f] &a[buyer]&b has purchased your claim at &a[coordinates] &b. The sale price was &a[ListingPriceonSign]&b.");
+                " &f[&6GPAuctions&f] &a" + event.getBuyer().getName() + "&b has purchased your claim at &a" +
+                getfriendlyLocationString(event.getClaim().getLesserBoundaryCorner()) + " &b. The sale price was &a" +
+                event.getPrice() + "&b.");
         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), command);
+    }
+
+    public static String getfriendlyLocationString(Location location)
+    {
+        return location.getWorld().getName() + ": x" + location.getBlockX() + ", z" + location.getBlockZ();
     }
 
 }

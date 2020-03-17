@@ -75,7 +75,7 @@ public class GPREListener
         }
 
         //fire sale event
-        plugin.getServer().getPluginManager().callEvent(new GPRSaleEvent(claim));
+        plugin.getServer().getPluginManager().callEvent(new GPRSaleEvent(claim, buyer, price));
 
         //RoboMWM - transfer accrued claim blocks
         if (!plugin.dataStore.cfgTransferClaimBlocks || claim.parent != null)
