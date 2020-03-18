@@ -32,6 +32,8 @@ public class GPRSaleEvent extends Event
     public GPRSaleEvent(Claim claim, OfflinePlayer buyer, double price)
     {
         this.claim = claim;
+        this.buyer = buyer;
+        this.price = price;
     }
 
     public Claim getClaim()
