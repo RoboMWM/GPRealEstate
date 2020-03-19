@@ -127,12 +127,12 @@ public class GPREListener
                                 "X: " + player.getLocation().getBlockX() + ", " +
                                 "Y: " + player.getLocation().getBlockY() + ", " +
                                 "Z: " + player.getLocation().getBlockZ() + "] " +
-                                "Price: " + thePrice + " " + GPRealEstate.econ.currencyNamePlural());
+                                "Price: " + thePrice + " " + GPRealEstate.econ.currencyNamePlural() + "by the way I think this log message is a copy-pasted typo because it has not listed the claim for sale yet, it has only generated a price...");
             }
             String price = event.getLine(1);
             try
             {
-                Double.parseDouble(event.getLine(1));
+                Double.parseDouble(event.getLine(1)); //idk why not `double price = Double.parseDouble`...
             }
             catch (NumberFormatException e)
             {
