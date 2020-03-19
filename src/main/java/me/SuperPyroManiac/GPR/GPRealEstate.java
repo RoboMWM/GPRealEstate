@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
 
+import me.SuperPyroManiac.GPR.feature.BroadcastNewListings;
 import me.SuperPyroManiac.GPR.feature.MailSellerOnSale;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -65,6 +66,7 @@ public class GPRealEstate
         }
         loadConfig(false);
         new MailSellerOnSale(this);
+        new BroadcastNewListings(this, econ);
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
