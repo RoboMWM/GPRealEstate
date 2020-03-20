@@ -164,7 +164,7 @@ public class GPREListener
                                     "Y: " + player.getLocation().getBlockY() + ", " +
                                     "Z: " + player.getLocation().getBlockZ() + "] " +
                                     "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural());
-                    new GPRListEvent(claim, Double.parseDouble(price));
+                    plugin.getServer().getPluginManager().callEvent(new GPRListEvent(claim, Double.parseDouble(price)));
                 }
                 else if (claim.isAdminClaim())
                 {
@@ -186,7 +186,7 @@ public class GPREListener
                                             "Y: " + player.getLocation().getBlockY() + ", " +
                                             "Z: " + player.getLocation().getBlockZ() + "] " +
                                             "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural());
-                            new GPRListEvent(claim, Double.parseDouble(price));
+                            plugin.getServer().getPluginManager().callEvent(new GPRListEvent(claim, Double.parseDouble(price)));
                         }
                         else
                         {
@@ -224,7 +224,7 @@ public class GPREListener
                                     "Y: " + player.getLocation().getBlockY() + ", " +
                                     "Z: " + player.getLocation().getBlockZ() + "] " +
                                     "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural());
-                    new GPRListEvent(claim, Double.parseDouble(price));
+                    plugin.getServer().getPluginManager().callEvent(new GPRListEvent(claim, Double.parseDouble(price)));
                 }
             }
             else if ((player.getName().equalsIgnoreCase(claim.parent.getOwnerName())) || (claim.managers.equals(player.getName()))) {
@@ -247,7 +247,7 @@ public class GPREListener
                                         "Y: " + player.getLocation().getBlockY() + ", " +
                                         "Z: " + player.getLocation().getBlockZ() + "] " +
                                         "Price: " + price + " " + GPRealEstate.econ.currencyNamePlural());
-                        new GPRListEvent(claim, Double.parseDouble(price), true);
+                        plugin.getServer().getPluginManager().callEvent(new GPRListEvent(claim, Double.parseDouble(price), true));
                     }
                 }
                 else
