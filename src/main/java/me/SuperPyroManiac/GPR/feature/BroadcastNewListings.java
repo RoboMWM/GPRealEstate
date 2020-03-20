@@ -2,6 +2,8 @@ package me.SuperPyroManiac.GPR.feature;
 
 import me.SuperPyroManiac.GPR.events.GPRListEvent;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -26,7 +28,9 @@ public class BroadcastNewListings implements Listener
     @EventHandler
     public void onNewClaimForSale(GPRListEvent event)
     {
-        StringBuilder message = new StringBuilder("broadcast &f[&6RealEstate&f] &bA real estate listing has been created at &a[SignCoordinates]&b. The ");
+        StringBuilder message = new StringBuilder("broadcast &f[&6RealEstate&f] &bA real estate listing has been created at &a");
+        message.append(getfriendlyLocationString(event.getClaim().getLesserBoundaryCorner()));
+        message.append("&b. The ");
         String noun = "list";
         if (event.isSubClaim())
             noun = "Subclaim";
@@ -35,6 +39,13 @@ public class BroadcastNewListings implements Listener
         message.append(economy.format(event.getPrice()));
         message.append("&b.");
 
-        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), message.toString());
+        String command = ChatColor.translateAlternateColorCodes('&', message.toString());
+
+        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), command);
+    }
+
+    public static String getfriendlyLocationString(Location location)
+    {
+        return location.getWorld().getName() + ": x" + location.getBlockX() + ", z" + location.getBlockZ();
     }
 }
